@@ -1,0 +1,22 @@
+#include <iostream>
+#include <algorithm>
+#define SIZE 100001
+using namespace std;
+
+int arr[SIZE];
+int dp[SIZE];
+
+int main(void) {
+    int n, max_sum;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    dp[0] = arr[0];
+    max_sum = dp[0];
+    for (int i = 1; i < n; i++) {
+        dp[i] = max(dp[i - 1] + arr[i], arr[i]); // 계속 더해나가는 것 최대값인지 아니면 새롭게 시작하는게 최대값인지 확인
+        max_sum = max(max_sum, dp[i]); // 최대값을 계속 최신화 시킴
+    }
+    cout << max_sum;
+}
