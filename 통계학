@@ -1,0 +1,48 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+int num[8001];
+
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+
+    vector<int> arr;
+    int arv, mid, most_val, range;
+    int n, data, most = 0;
+    double sum = 0;
+    bool not_first = false;
+
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> data;
+        sum += data;
+        num[data + 4000]++; // 최빈값을 구하기 위해 인덱스 번호로 값을 넣고 해당 인덱스를 더한다.
+        arr.push_back(data); // 숫자를 벡터에 넣는다.
+    }
+
+    sort(arr.begin(), arr.end());
+
+    for (int i = 0; i < 8001; i++) {
+        if (num[i] == 0) continue; // 나오지 않았다면 패스
+        else if (num[i] > most) { // 가장 많이 나온 값이라면
+            not_first = true; // 나중에 most값이 같은 값이 나온다면 그 값을 most_val에 넣어야 하기 때문에 true로 바꿔준다.
+            most = num[i];
+            most_val = i - 4000;
+        }
+        else if (num[i] == most) { // most값이 같은 경우
+            if (not_first == true) { // 만약 이게 두 번째로 큰 수라면 (정렬을 안했어도 i가 0부터 순차적으로 돌기 때문)
+                not_first = false; // false로 바꿔 세 번째 수가 나온다면 패스
+                most_val = i - 4000;
+            }
+        }
+    }
+
+    arv = round(sum / n); // 소수점 첫째자리에 반올림
+    mid = arr[arr.size() / 2];
+    range = arr.back() - arr.front();
+    
+    cout << arv << '\n' << mid << '\n' << most_val << '\n' << range;
+}
