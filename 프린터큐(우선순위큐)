@@ -1,0 +1,36 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+
+    int n, m, t, importance;
+    cin >> t;
+    for (int i = 0; i < t; i++) {
+        int count = 0;
+        priority_queue<int> pq; // 내림차순으로 정렬이 되는 큐
+        queue<pair<int, int>> q; // 위치와 중요도를 모두 담는 페어 큐
+        cin >> n >> m;
+        for (int j = 0; j < n; j++) {
+            cin >> importance;
+            pq.push(importance);
+            q.push({ j, importance });
+        }
+
+        while (!q.empty()) {
+            int location = q.front().first, val = q.front().second; // 변수에 넣어서 시각적으로 보기 쉽게 처리
+            q.pop(); // 일단 pop하고 나중에 우선순위가 맞지 않다면 다시 push해준다.
+            if (val == pq.top()) { // 우선순위가 가장 높은 경우
+                pq.pop();
+                count++; // 인쇄되는 순서를 저장
+                if (m == location) {
+                    cout << count << '\n';
+                    break;
+                }
+            }
+            else
+                q.push({ location, val });
+        }
+    }
+}
