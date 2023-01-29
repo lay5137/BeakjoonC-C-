@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+int land[501][501];
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    
+    int n, m, b, i, j, h;
+    int mintime = 1e9;
+    int maxheight = -1;
+    cin >> n >> m >> b;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < m; j++) {
+            cin >> land[i][j];
+        }
+    }
+    for (h = 0; h <= 256; h++) { // 0부터 256까지의 높이를 모두 조사해본다.(브루트 포스)
+        int inven = 0;
+        int remove = 0;
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < m; j++) {
+                int curheight = land[i][j] - h;
+                if (curheight < 0) inven -= curheight; // curheight가 음수인 경우는 h보다 낮아서 채워야 하는 경우
+                else remove += curheight; // 양수인 경우는 h보다 높아서 제거해야 하는 경우
+            }
+        }
+        if (remove + b >= inven) { // 제거해서 인벤토리에 넣은 블록과 b를 더한 값이 채워야 하는 블록보다 크거나 같을 때
+            int time = 2 * remove + inven;
+            if (mintime >= time) {
+                mintime = time;
+                maxheight = h;
+            }
+        }
+    }
+    cout << mintime << " " << maxheight;
+    return 0;
+}
