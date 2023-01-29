@@ -1,0 +1,27 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+
+    vector <int> arr, sorted;
+    int n, num;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> num;
+        arr.push_back(num);
+        sorted.push_back(num);
+    }
+
+    sort(sorted.begin(), sorted.end());
+    sorted.erase(unique(sorted.begin(), sorted.end()), sorted.end());
+    // unique로 중복되는 값을 뒤로 넘기고 가장 첫 번째 주소를 리턴, 끝 주소 => 이용해서 erase함
+
+    for (int i = 0; i < n; i++) {
+        cout << lower_bound(sorted.begin(), sorted.end(), arr[i]) - sorted.begin() << ' ';
+        // lower_bound는 찾는 값 보다 크거나 같은 값이 처음 등장하는 위치 리턴
+        // 현재 주소에서 시작 주소를 빼면 인덱스 번호가 나오는 것을 이용해서 인덱스 번호 출력
+    }
+}
