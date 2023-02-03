@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+
+    int n;
+    vector<pair<int, int>> arr;
+
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        int a, b;
+        cin >> a >> b;
+        arr.push_back(make_pair(b, a));
+    }
+    sort(arr.begin(), arr.end()); //회의의 끝나는 시간을 오름차순으로 정렬하여 순차적으로 탐색할 수 있게 만든다.
+
+    int tmp = arr[0].first; //회의가 끝나는 시간 중 가장 작은 시간 넣기
+    int cnt = 1; //첫 번째 회의는 무조건 들어가야함 (끝나는 시간이 가장 빠르기 때문->두 번째 회의의 시작시간이 더 빨라도 끝나는 시간이 더 커서 비효울적임
+    for (int i = 1; i < n; i++) {
+        if (tmp <= arr[i].second) { //이전 회의의 끝나는 시간보다 회의의 시작시간이 같거나 더 큰 경우
+            tmp = arr[i].first; //tmp에 회의의 끝나는 시간 넣기
+            cnt++;
+        }
+    }
+    cout << cnt;
+}
