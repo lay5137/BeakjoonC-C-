@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int dp[1001][1001];
+
+int main(void) {
+    ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
+
+    string a, b;
+    cin >> a >> b;
+    for (unsigned int i = 0; i < a.length(); i++) {
+        for (unsigned int j = 0; j < b.length(); j++) {
+            if (a[i] == b[j]) {
+                dp[i + 1][j + 1] = dp[i][j] + 1; // 문자가 같은 경우 이전 결과값 + 1(같은 경우 1 추가)
+            }
+            else {
+                dp[i + 1][j + 1] = max(dp[i + 1][j], dp[i][j + 1]); // 다른 경우 위쪽(a 1칸 더 탐색), 왼쪽(b 1칸 더 탐색) 중 큰것
+            }
+        }
+    }
+    cout << dp[a.length()][b.length()];
+}
