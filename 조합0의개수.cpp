@@ -24,7 +24,7 @@ int main(void) {
     long long n, m, t_cnt = 0, f_cnt = 0;
     cin >> n >> m; //두 수 (m<=n) 입력받기
 
-    t_cnt = count_n(n) - count_n(m) - count_n(n - m);
+    t_cnt = count_n(n) - count_n(m) - count_n(n - m); // 조합공식 이용
     f_cnt = count_m(n) - count_m(m) - count_m(n - m);
     cout << min(t_cnt, f_cnt); // 둘 중 작은 값 출력 (작은 값의 개수가 곧 10의 개수)
 }
