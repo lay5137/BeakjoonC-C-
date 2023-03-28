@@ -1,0 +1,31 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int graph[26];
+
+bool cmp(int& a, int& b) {
+    return a > b;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        string str;
+        cin >> str;
+        int pow = 1;
+        for (int j = str.length() - 1; j >= 0; j--) { //일의 자리 부터 탐색
+            graph[str[j] - 'A'] += pow; //해당 알파벳에다가 자리수 대로 pow값을 더해줌
+            pow *= 10;
+        }
+    }
+    sort(graph, graph + 26, cmp);
+    int num = 9;
+    int ans = 0;
+    for (int i = 0; i < 26; i++) {
+        if (graph[i] == 0) break; // 내림차순 정렬이기 때문에
+        ans += graph[i] * num;
+        num--;
+    }
+    cout << ans;
+}
